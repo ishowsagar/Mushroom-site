@@ -307,11 +307,67 @@ in their respective nested vars. */
     justify-content: space-between;
   }
 
+  [aria-controls="primary-nav"] {
+    z-index: 100;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+
+    img {
+      border-radius: 0;
+      /* as all images were set to a border default radius so we have
+      to explicitly reset down it to zero here for this hamburger menu icon image */
+    }
+  }
+  /* For normal desktop view, we are hiding button out of the screen */
+  [aria-controls="primary-nav"] {
+    display: none;
+  }
+
   .primary-navigation {
     ul {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem 1rem;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    @media (width < 760px) {
+      display: none;
+      position: absolute;
+      z-index: 10;
+      top: 0;
+      right: 0;
+      font-size: var(--font-size-lg);
+      font-family: var(--ff--heading);
+      font-weight: 700;
+      background-color: var(--background-accent-main);
+      padding: 2rem;
+      border-radius: 0px 0px 0px var(--border-radius-3);
+
+      ul {
+        gap: 0px;
+        flex-direction: column;
+
+        li + li {
+          margin-block-start: 1.5rem;
+          padding-block-start: 1.5rem;
+          border-top: 2px solid var(--background-accent-light);
+        }
+      }
+    }
+  }
+
+  @media (width < 760px) {
+    [aria-controls="primary-nav"] {
+    display: block;
+  }
+    [aria-expanded="true"] + .primary-navigation {
+      /* here we are selecting the element just after this element using ~ */
+      display: block;
     }
   }
 
@@ -393,8 +449,8 @@ in their respective nested vars. */
     font-weight: 700;
     border-radius: var(--border-radius-2);
     cursor: pointer;
-
   }
+
   .button:hover,
   .button:focus-visible {
     color: var(--text-high-contrast);
