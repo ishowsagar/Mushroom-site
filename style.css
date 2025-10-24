@@ -394,11 +394,11 @@ in their respective nested vars. */
     border-radius: var(--border-radius-2);
     cursor: pointer;
 
-    .button:hover,
-    .button:focus-visible {
-      color: var(--text-high-contrast);
-      background-color: var(--background-accent-light);
-    }
+  }
+  .button:hover,
+  .button:focus-visible {
+    color: var(--text-high-contrast);
+    background-color: var(--background-accent-light);
   }
 }
 
