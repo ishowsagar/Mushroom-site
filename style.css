@@ -100,6 +100,7 @@
     scroll-margin-block: 5ex;
   }
 }
+
 @layer base {
   :root {
     /* clr-brown-500 -> 5000 here is the font-weight, so we can tell it by weight,
@@ -214,6 +215,191 @@ in their respective nested vars. */
   a:focus-visible {
     color: var(--text-brand-light);
   }
+
+  img {
+    border-radius: var(--border-radius-3);
+  }
+}
+
+@layer layout {
+  /* .flow > * + * {
+      css code --> It is like saying select everything and apply css on *except the first child in this 
+      /*container where we applied this css class
+    } */
+
+  .flow > * + * {
+    margin-top: var(
+      --flow-space,
+      1em
+    ); /* we can directly declare var with its value inside the prop where we ar creating it */
+  }
+
+  .grid-flow {
+    display: grid; /* notice* we used rem units to make it relative to the font size */
+    gap: var(
+      --grid-flow-gap,
+      1rem
+    ); /* we used here grid gap to give gap --> between each child element *consistently */
+  }
+
+  .equal-columns {
+    display: grid;
+    gap: var(--equal-columns-gap, 1rem);
+    align-items: var(--equal-columns-vertical-alignment, stretch);
+
+    @media (width > 760px) {
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+    }
+    &[data-gap="large"] {
+      --equal-columns-gap: 2rem;
+    }
+    & [data-alignment="centered"] {
+      --equal-columns-vertical-alignment: center;
+    }
+  }
+  .section {
+    /* set up acustom prop for padding and that will be used in the context of padding-block (cross-axis level) */
+    --padding: 3.75rem;
+
+    padding-block: var(
+      --padding
+    ); /* Earlier we used inline for main axis, Block -> explicitly sets thjings for cross/vertical axis */
+
+    @media (width > 760px) {
+      --padding: 8rem;
+
+      &[data-padding="compact"] {
+        --padding: 4.5rem;
+      }
+    }
+  }
+
+  .wrapper {
+    --wrapper-max-width: 1130px; /* setting up custom property to use as var for more readibility of the code*/
+
+    max-width: var(--wrapper-max-width);
+    margin-inline: auto; /* center the content with equal margin both sides and margin-iline -> main-axis(inline prop)*/
+    padding-inline: 1rem; /* 1 rem here is -> 16px */
+
+    /* we actually want to have container width - 1130px , but since we using border-box, 
+    everything including adding is included in the whole container, 
+    so we explicitly want to have our cotainer sized 1130px*/
+    box-sizing: content-box;
+
+    & [data-width="narrow"] {
+      --wrapper-max-width: 720px;
+    }
+    & [data-width="wide"] {
+      --wrapper-max-width: 1330px; /* it is taking idea in which context we have used this variable in main prop*/
+    }
+  }
+}
+
+@layer components {
+  .site-header {
+    padding-block: 1rem;
+  }
+  .site-header__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+
+  .primary-navigation {
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+    }
+  }
+
+  .site-footer {
+    display: grid;
+    gap: 2rem; /* if you see consistent spaicng down the column,
+     you might wanna use grid and give it consistent gap* to set things apart neatly and consistently */
+    background-color: var(--background-dark);
+    text-align: center;
+    padding-block: 2rem;
+
+    a {
+      color: var(--text-main);
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: var(--text-brand-light);
+    }
+  }
+
+  .site-footer__title {
+    font-size: var(--font-size-lg);
+    font-family: var(--ff--heading);
+    font-weight: 700;
+  }
+
+  .hero {
+    text-align: center;
+    font-size: var(--font-size-md);
+    color: var(--text-high-contrast);
+    background-image: url(assets/hero.webp);
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hero__title {
+    font-size: var(--font-size-heading-lg);
+
+    span {
+      display: block; /* so text does not behave weirdly so we can have texts words seperately each block */
+      font-size: var(
+        --font-size-heading-xl
+      ); /* this so clean way to select the child 
+      element by nesting that element inside,
+      instead of using desecendat selector with arrows and gets confused */
+      color: var(--text-brand);
+    }
+  }
+
+  .card {
+    display: grid;
+    gap: var(--card-gap, 1rem);
+    padding: var(
+      --card-padding,
+      1rem
+    ); /* made my own custom var for paddinf the cards comps*/
+    background-color: var(--background-light);
+    border-radius: var(--border-radius-3);
+
+    img {
+      border-radius: var(--border-radius-2);
+    }
+  }
+
+  .card__title {
+    font-size: var(--card-title-font-size, var(--font-size-heading-sm));
+    color: var(--card-title-color, var(--text-brand));
+  }
+
+  .button {
+    /* we are here* styling the links with class --> button */
+    display: inline-flex; /* inside cotext,text-icon will be in flex display */
+    font-size: var(--font-size-md);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    background-color: var(--background-accent-main);
+    font-family: var(--ff--heading);
+    font-weight: 700;
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+
+    .button:hover,
+    .button:focus-visible {
+      color: var(--text-high-contrast);
+      background-color: var(--background-accent-light);
+    }
+  }
 }
 
 @layer utilities {
@@ -225,5 +411,52 @@ in their respective nested vars. */
     position: absolute;
     white-space: nowrap;
     width: 1px;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+  .text-brand {
+    color: var(--text-brand);
+  }
+  .text-high-contrast {
+    color: var(--text-high-contrast);
+  }
+
+  .section-title {
+    font-size: var(--font-size-heading-regular);
+  }
+
+  .background-base {
+    background-color: var(--background-base);
+  }
+  .background-light {
+    background-color: var(--background-light);
+  }
+  .background-extra-light {
+    background-color: var(--background-extra-light);
+  }
+  .background-dark {
+    background-color: var(--background-dark);
+  }
+  .background-extra-dark {
+    background-color: var(--background-extra-dark);
+  }
+
+  .background-accent {
+    background-color: var(--background-accent-dark);
+  }
+
+  .font-size-sm {
+    font-size: var(--font-size-sm);
+  }
+  .font-size-regular {
+    font-size: var(--font-size-regular);
+  }
+  .font-size-md {
+    font-size: var(--font-size-md);
+  }
+  .font-size-lg {
+    font-size: var(--font-size-lg);
   }
 }
