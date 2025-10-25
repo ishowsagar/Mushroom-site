@@ -288,12 +288,12 @@ in their respective nested vars. */
   }
   /* 12 mini-cards layout */
   .grid-auto-fit {
-    --auto-fit-min-col-size: 250px;
+    --auto-fill-min-col-size: 250px;
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(
       auto-fill,
-      minmax(min(var(--auto-fit-min-col-size), 100%), 1fr)
+      minmax(min(var(--auto-fill-min-col-size), 100%), 1fr)
         /* for min grid value, we are setting min atleast to be 600px or if it does not fit, then take the whole 100% min space available */
         /* always try to setup your min values like that, even if it is 100px, use 100% to set things up neatly */
     ); /* 1fr --> take up space what's available and atleast have min 300px grid */
@@ -631,6 +631,7 @@ in their respective nested vars. */
     flex-direction: column;
     gap: var(--card-gap, 1rem);
     padding: 1rem;
+    height: 100%;
     background-color: var(--background-light);
     border-radius: var(--border-radius-3);
 
@@ -653,15 +654,16 @@ in their respective nested vars. */
 
   .tag-list {
     display: flex;
-
-    gap: 0.5rem;
+    gap: var(--tag-list-gap, 12px);
     flex-wrap: wrap;
+    padding-inline-start: 0;
 
     li {
       font-family: var(--ff--heading);
       font-size: var(--font-size-sm);
       color: var(--text-high-contrast);
-      padding: 0 0.25rem;
+      gap: 0.5rem;
+      padding: 0.125rem 0.5rem;
       background-color: var(--tag-bg, red);
       border-radius: var(--border-radius-1);
     }
