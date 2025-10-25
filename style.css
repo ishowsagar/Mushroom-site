@@ -229,7 +229,10 @@ in their respective nested vars. */
   body {
     font-size: var(--font-size-regular);
     color: var(--text-main);
-    background-color: light-dark(var(--background-dark),var(--background-main));
+    background-color: light-dark(
+      var(--background-dark),
+      var(--background-main)
+    );
   }
   h1,
   h2,
