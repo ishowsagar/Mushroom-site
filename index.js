@@ -12,7 +12,7 @@ navToggle.addEventListener("click", () => {
 // whenever window resizes, it prevents the animation/transition to
 // happen ( like we're seeing auto-animations of open-close
 // whenever window gets resized)
-const resizeObserver = new ResizeObserverSize(() => {
+const resizeObserver = new ResizeObserver(() => {
   document.body.classList.add("resizing");
 
   requestAnimationFrame(() => {
